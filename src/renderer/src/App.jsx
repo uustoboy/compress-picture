@@ -1,8 +1,8 @@
 // import Versions from './components/Versions'
 // import icons from './assets/icons.svg'
 import React, { useState } from 'react'
-import { SettingOutlined } from '@ant-design/icons'
-import { Button, Space, Input, Modal } from 'antd'
+import { SettingOutlined , PictureOutlined  } from '@ant-design/icons'
+import { Button, Space, Input, Modal,Divider,Slider } from 'antd'
 const { ipcRenderer, dialog } = require('electron')
 const fs = require('fs')
 const path = require('path')
@@ -70,13 +70,15 @@ const fateGear = (url) => {
 function App() {
   const [modal, contextHolder] = Modal.useModal()
 
-  const [imgCompressPath, setImgCompressPath] = useState('123')
+  const [imgCompressPath, setImgCompressPath] = useState('')
+  const [quality,setQuality] = useState(90)
+  
 
-  const countDown = () => {
+  const countDown = (text) => {
     let secondsToGo = 5
     const instance = modal.success({
       title: '消息通知',
-      content: `123`
+      content: text
     })
     const timer = setInterval(() => {
       secondsToGo -= 1
@@ -94,13 +96,26 @@ function App() {
     ipcRenderer.send('open-file-dialog')
   }
 
+  let handleCompressImg = ()=>{
+    if( !imgCompressPath ){
+      countDown('请设置压缩图片路径');
+      return;
+    }
+    console.log(quality,'quality')
+    // fateGear(imgCompressPath)
+  }
+
   ipcRenderer.on('select-file', (event, arg) => {
     if (arg.length > 0) {
       setImgCompressPath(arg[0])
-      fateGear(arg[0])
     }
   })
 
+  const onChange = (value) => {
+    console.log('onChange: ', value);
+    setQuality(value);
+  };
+  
   return (
     <>
       {/* <Versions></Versions> */}
@@ -109,12 +124,17 @@ function App() {
         <Button type="primary">Primary Button</Button>
       </Space> */}
       <Space.Compact style={{ width: '100%' }}>
-        <Input defaultValue="请输入压缩图片地址" disabled value={imgCompressPath} />
+        <Input placeholder='压缩图片路径' disabled value={imgCompressPath} />
         {/* <SettingOutlined /> */}
         <Button icon={<SettingOutlined />} type="primary" onClick={handleGetFile}>
-          Submit
+          设置路径
+        </Button>
+        <Button icon={<PictureOutlined />} type="primary" onClick={handleCompressImg}>
+          开始图片压缩
         </Button>
       </Space.Compact>
+      <Slider defaultValue={quality} onChange={onChange}  tooltip={{ open: true }} />
+      <Divider plain></Divider>
       {contextHolder}
     </>
   )
