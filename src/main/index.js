@@ -3,19 +3,22 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
-function createWindow() {
+function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
     show: false,
+    resizable: false, // 禁止调整窗口大小
     autoHideMenuBar: true,
+    frame: false, // 隐藏边框
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      webSecurity: false
     }
   })
 
@@ -36,11 +39,11 @@ function createWindow() {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  Menu.setApplicationMenu(null)
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
@@ -69,7 +72,17 @@ ipcMain.on('open-file-dialog', async (event, params) => {
     .then((result) => {
       event.sender.send('select-file', result.filePaths)
     })
-    .catch((err) => {})
+    .catch((err) => { })
+})
+
+ipcMain.on('min-win', async (e) => {
+  const mainWindow = BrowserWindow.getFocusedWindow()
+  mainWindow.minimize()
+})
+
+ipcMain.on('close-win', async (e) => {
+  const mainWindow = BrowserWindow.getFocusedWindow()
+  mainWindow.close()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
