@@ -204,18 +204,15 @@ function App() {
         compressImage(filePath, directory, file, traverseFiles)
       }
     })
-
-    if (traverseFiles.length <= 1) {
-      setTimeout(() => {
-        setLoading(false)
-      }, 250)
-    }
   }
 
   const fateGear = (url) => {
     const directory = url // 当前目录
     const destinationDirectory = path.join(directory)
     traverseDirectory(destinationDirectory)
+    setTimeout(() => {
+      setLoading(false)
+    }, 300)
   }
 
   const getBg = () => {
