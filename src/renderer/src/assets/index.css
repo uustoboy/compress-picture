@@ -1,5 +1,5 @@
 body {
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', 'Oxygen',
+  font-family: 'Microsoft YaHei',Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Open Sans', sans-serif;
 }
 
@@ -33,37 +33,38 @@ a:hover {
   border-bottom: 1px solid;
 }
 
-body,html{
+body,
+html {
   width: 100%;
   height: 100%;
 }
 
-#root,.main{
+#root,
+.main {
   width: 100%;
   height: 100%;
 }
 
-.main-top{
+.main-top {
   padding: 3% 10% 0;
 }
 
-
-.nav{
+.nav {
   padding: 0 11px;
   width: 100%;
   height: 35px;
-  background: #1677ff;
-  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+  background: #fc5531;
+  box-shadow: 0 2px 0 rgba(246, 23, 29, 0.1);
   box-sizing: border-box;
 }
-.nav-title{
+.nav-title {
   width: 95%;
   font-size: 16px;
   line-height: 35px;
   color: #fff;
   -webkit-app-region: drag;
 }
-.nav-set{
+.nav-set {
   position: relative;
   z-index: 10;
   float: right;
@@ -73,15 +74,51 @@ body,html{
   justify-content: space-between;
   align-items: center;
 }
-.quality-title{
+.quality-title {
   font-size: 16px;
   line-height: 35px;
   color: #fff;
   margin: 15px 0;
 }
-.rule-line{
-  width: 95%;
-  height: 2px;
-  margin: 15px auto;
-  background:rgba(22,119, 255,.4);
+.rule-line {
+  width: 100%;
+  height: 3px;
+  background: rgba(252, 85, 49, 0.5);
+}
+.nav-subTitle{
+  font-size: 11px;
+  line-height: 35rpx;
+  color: #fff;
+  margin:0 0 0 5px;
+}
+
+.list-main{
+  width: 90%;
+  height: 72%;
+  margin:10px auto;
+  overflow-y: auto; /* 添加垂直滚动条 */
+  scrollbar-width: thin; /* 定义滚动条的宽度 */
+  scrollbar-color: #c0c0c0 #f0f0f0; /* 定义滚动条的颜色 */
+}
+
+.list-main::-webkit-scrollbar {
+  width: 4px; /* 定义滚动条的宽度 */
+}
+.list-main::-webkit-scrollbar-track {
+  background: #f0f0f0; /* 定义滚动条背景颜色 */
+}
+.list-main::-webkit-scrollbar-thumb {
+  background-color: #fc5531; /* 定义滚动条拖动块的背景颜色 */
+  border-radius: 4px; /* 定义滚动条拖动块的圆角 */
+}
+.list-main::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0; /* 定义鼠标悬停时滚动条拖动块的背景颜色 */
+}
+
+.contentHeight,.contentHeight-main{
+  height: 765px;
+}
+
+.contentHeight .ant-spin{
+  max-height: 765px;
 }

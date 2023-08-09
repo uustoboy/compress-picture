@@ -2,8 +2,9 @@ import { app, shell, BrowserWindow, Menu, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+// import icon from '../../build/icon.png?asset'
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1000,
@@ -72,7 +73,7 @@ ipcMain.on('open-file-dialog', async (event, params) => {
     .then((result) => {
       event.sender.send('select-file', result.filePaths)
     })
-    .catch((err) => { })
+    .catch((err) => {})
 })
 
 ipcMain.on('min-win', async (e) => {
