@@ -94,9 +94,8 @@ function App() {
     })
   }
   // 压缩图片
-  const compressImage = async (source, destination, file) => {
-    let tempUrl = createTempFolder(destination)
-    let tempFile = path.join(tempUrl, file)
+  const compressImage = async (source, file, upFolder) => {
+    let tempFile = path.join(upFolder, file)
     const fileFormat = path.extname(source)
     let sharpImg = sharp(source)
     let sharpImgQuality = ''
@@ -115,8 +114,7 @@ function App() {
         sharpImgQuality = sharpImg
     }
     await sharpImgQuality.toFile(tempFile)
-    replaceImage(source, tempFile, destination)
-    setDataList((prevArray) => [...prevArray, source])
+    setDataList((prevArray) => [...prevArray, `${tempFile} 压缩完成`])
   }
 
   //获取图片张数;
@@ -200,9 +198,20 @@ function App() {
       const stats = fs.statSync(filePath)
       if (stats.isDirectory() && file !== 'originalImg') {
         traverseDirectory(filePath)
-      } else if (stats.isFile() && /\.(jpg|jpeg|png|gif|bmp)$/i.test(file)) {
-        compressImage(filePath, directory, file, traverseFiles)
+      } else if (file == 'originalImg') {
+        let curOriginalImgFilePath = path.join(directory, file)
+        fs.readdirSync(curOriginalImgFilePath).forEach((oriFile) => {
+          const oriFilePath = path.join(curOriginalImgFilePath, oriFile)
+          const oriStats = fs.statSync(oriFilePath)
+          if (oriStats.isFile() && /\.(jpg|jpeg|png|gif|bmp)$/i.test(oriFile)) {
+            compressImage(oriFilePath, oriFile, directory)
+          }
+        })
       }
+
+      // else if (stats.isFile() && /\.(jpg|jpeg|png|gif|bmp)$/i.test(file)) {
+      //   compressImage(filePath, directory, file, traverseFiles)
+      // }
     })
   }
 

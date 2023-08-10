@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: compress-picture
+productName: 压缩图片
 directories:
   buildResources: build
 files:
@@ -12,7 +12,8 @@ asarUnpack:
   - resources/**
 afterSign: build/notarize.js
 win:
-  executableName: compress-picture
+  # executableName: compress-picture
+  executableName: 压缩图片
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
