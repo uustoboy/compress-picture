@@ -1,9 +1,9 @@
 {
   "name": "compress-picture",
-  "version": "1.0.1",
-  "description": "An Electron application with React",
+  "version": "1.0.2",
+  "description": "图片压缩",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": "uustoboy",
   "homepage": "https://www.electronjs.org",
   "scripts": {
     "format": "prettier --write .",
